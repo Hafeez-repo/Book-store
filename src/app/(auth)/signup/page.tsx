@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import {
@@ -32,6 +32,11 @@ export default function SignupPage() {
   const firestore = useFirestore();
   const router = useRouter();
   const { toast } = useToast();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const handleSignUp = async () => {
     setIsLoading(true);
@@ -68,6 +73,10 @@ export default function SignupPage() {
       setIsLoading(false);
     }
   };
+
+  if (!isClient) {
+    return null; // Render nothing on the server
+  }
 
   return (
     <div className="flex items-center justify-center min-h-[calc(100vh-14rem)] py-12">
