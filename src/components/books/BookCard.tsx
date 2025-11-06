@@ -1,3 +1,4 @@
+
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Book } from '@/lib/types';
@@ -16,7 +17,7 @@ export function BookCard({ book, className }: BookCardProps) {
 
   return (
     <Link href={`/books/${book.id}`} className={cn("group", className)}>
-      <Card className="h-full overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+      <Card className="h-full overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 hover:scale-105">
         <CardContent className="p-0">
           <div className="aspect-[2/3] relative w-full">
             {image && (
