@@ -13,9 +13,11 @@ import { useFirebase, useUser } from '@/firebase';
 import { addDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 import { collection } from 'firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
+import React from 'react';
 
 export default function BookDetailPage({ params }: { params: { id: string } }) {
-  const book = getBookById(params.id);
+  const resolvedParams = React.use(params);
+  const book = getBookById(resolvedParams.id);
   const { firestore } = useFirebase();
   const { user, isUserLoading } = useUser();
   const { toast } = useToast();
