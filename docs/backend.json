@@ -1,0 +1,335 @@
+{
+  "entities": {
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents a user of the online bookstore.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the user."
+        },
+        "firebaseUid": {
+          "type": "string",
+          "description": "The unique user ID provided by Firebase Authentication."
+        },
+        "name": {
+          "type": "string",
+          "description": "The user's full name."
+        },
+        "email": {
+          "type": "string",
+          "description": "The user's email address.",
+          "format": "email"
+        },
+        "address": {
+          "type": "string",
+          "description": "The user's shipping address."
+        },
+        "profilePictureUrl": {
+          "type": "string",
+          "description": "URL of the user's profile picture stored in Firebase Storage."
+        }
+      },
+      "required": [
+        "id",
+        "firebaseUid",
+        "name",
+        "email"
+      ]
+    },
+    "Book": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Book",
+      "type": "object",
+      "description": "Represents a book in the online bookstore.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the book."
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the book."
+        },
+        "author": {
+          "type": "string",
+          "description": "The author of the book."
+        },
+        "genre": {
+          "type": "string",
+          "description": "The genre of the book."
+        },
+        "price": {
+          "type": "number",
+          "description": "The price of the book."
+        },
+        "stock": {
+          "type": "number",
+          "description": "The number of copies of the book in stock."
+        },
+        "description": {
+          "type": "string",
+          "description": "A description of the book."
+        },
+        "rating": {
+          "type": "number",
+          "description": "The average rating of the book."
+        },
+        "coverImageUrl": {
+          "type": "string",
+          "description": "URL of the book's cover image stored in Firebase Storage."
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "author",
+        "genre",
+        "price",
+        "stock",
+        "description",
+        "coverImageUrl"
+      ]
+    },
+    "Order": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Order",
+      "type": "object",
+      "description": "Represents an order placed by a user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the order."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N Order)"
+        },
+        "bookIds": {
+          "type": "array",
+          "description": "References to Books. (Relationship: Book N:N Order)",
+          "items": {
+            "type": "string"
+          }
+        },
+        "totalPrice": {
+          "type": "number",
+          "description": "The total price of the order."
+        },
+        "paymentStatus": {
+          "type": "string",
+          "description": "The payment status of the order (e.g., pending, completed, failed)."
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "The timestamp of when the order was placed.",
+          "format": "date-time"
+        },
+        "status": {
+          "type": "string",
+          "description": "The status of the order (e.g., pending, shipped, delivered, cancelled)."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "bookIds",
+        "totalPrice",
+        "paymentStatus",
+        "timestamp"
+      ]
+    },
+    "Review": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Review",
+      "type": "object",
+      "description": "Represents a review of a book by a user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the review."
+        },
+        "bookId": {
+          "type": "string",
+          "description": "Reference to Book. (Relationship: Book 1:N Review)"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N Review)"
+        },
+        "rating": {
+          "type": "number",
+          "description": "The rating given by the user (e.g., 1-5)."
+        },
+        "comment": {
+          "type": "string",
+          "description": "The comment provided by the user."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "The timestamp of when the review was created.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "bookId",
+        "userId",
+        "rating",
+        "comment",
+        "createdAt"
+      ]
+    },
+    "CartItem": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "CartItem",
+      "type": "object",
+      "description": "Represents an item in the user's shopping cart.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the cart item."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N CartItem)"
+        },
+        "bookId": {
+          "type": "string",
+          "description": "Reference to Book. (Relationship: Book 1:N CartItem)"
+        },
+        "quantity": {
+          "type": "number",
+          "description": "The quantity of the book in the cart."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "bookId",
+        "quantity"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user profile information.  Access is restricted to the user (or an admin).",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The Firebase UID of the user."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/books/{bookId}",
+        "definition": {
+          "entityName": "Book",
+          "schema": {
+            "$ref": "#/backend/entities/Book"
+          },
+          "description": "Stores book information. Publicly readable.",
+          "params": [
+            {
+              "name": "bookId",
+              "description": "The unique ID of the book."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/cartItems/{cartItemId}",
+        "definition": {
+          "entityName": "CartItem",
+          "schema": {
+            "$ref": "#/backend/entities/CartItem"
+          },
+          "description": "Stores items in the user's shopping cart. Access is restricted to the user.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The Firebase UID of the user."
+            },
+            {
+              "name": "cartItemId",
+              "description": "The unique ID of the cart item."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/orders/{orderId}",
+        "definition": {
+          "entityName": "Order",
+          "schema": {
+            "$ref": "#/backend/entities/Order"
+          },
+          "description": "Stores order information for a user. Access is restricted to the user.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The Firebase UID of the user."
+            },
+            {
+              "name": "orderId",
+              "description": "The unique ID of the order."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/books/{bookId}/reviews/{reviewId}",
+        "definition": {
+          "entityName": "Review",
+          "schema": {
+            "$ref": "#/backend/entities/Review"
+          },
+          "description": "Stores reviews for a specific book. Includes denormalized 'userId' for authorization. Admin reviews the content and confirms the approval",
+          "params": [
+            {
+              "name": "bookId",
+              "description": "The unique ID of the book."
+            },
+            {
+              "name": "reviewId",
+              "description": "The unique ID of the review."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/roles_admin/{userId}",
+        "definition": {
+          "entityName": "adminRole",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "DBAC: if a document exists here for a user id, they are an admin.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The Firebase UID of the user."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure is designed to support the online bookstore application, focusing on user authentication, book browsing, order management, and reviews. The structure prioritizes authorization independence by denormalizing user roles into the documents where authorization is required, eliminating the need for `get()` calls in security rules. This design supports secure `list` operations and atomic operations for transactions and batches.\n\n**Authorization Independence and QAPs:**\n*   **User Data:** User profiles are stored under `/users/{userId}`.  This path-based ownership ensures that only the authenticated user (or an admin) can access their data. No denormalization is required here because access is solely based on the user's `uid` matching the `userId` in the path.\n*   **Books:** Book data is stored in the `/books/{bookId}` collection.  This collection is publicly readable, allowing all users to browse books. Administrative access for creating, updating, and deleting books would rely on a separate `/roles_admin/{uid}` collection to grant admin privileges (DBAC).\n*   **Cart Items:** Cart items are stored under `/users/{userId}/cartItems/{cartItemId}`.  This structure provides path-based ownership, ensuring that only the authenticated user can manage their cart.  This structure inherently supports secure list operations (QAPs) because listing cart items is always scoped to a specific user.\n*   **Orders:** Orders are stored under `/users/{userId}/orders/{orderId}`. This path-based ownership ensures that only the authenticated user can access their own order history.  Admin access would be controlled via the `/roles_admin/{uid}` collection.\n*   **Reviews:** Reviews are stored in a subcollection under each book document at `/books/{bookId}/reviews/{reviewId}`. Each review document also contains the `userId` of the reviewer and the `status` field. The `status` field is set by Review Sentiment Tool. In the meantime, the admin reviews the content and confirms the approval.\n\nThis structure allows for easy implementation of security rules, as most data access is based on simple path-based ownership or membership checks.  It also enables efficient querying and data management, as the data is organized in a way that reflects the application's core features and user interactions."
+  }
+}
