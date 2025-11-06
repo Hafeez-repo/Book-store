@@ -1,3 +1,5 @@
+'use client';
+
 import Image from "next/image";
 import Link from "next/link";
 import { getBooks } from "@/lib/data";
@@ -38,7 +40,7 @@ export default function CartPage() {
                       <div className="flex items-center justify-between mt-2">
                         <p className="text-lg font-semibold text-primary">${item.price.toFixed(2)}</p>
                         <div className="flex items-center gap-2">
-                            <Input type="number" value={item.quantity} className="w-16 h-9" />
+                            <Input type="number" defaultValue={item.quantity} className="w-16 h-9" />
                             <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-destructive">
                                 <Trash2 className="h-4 w-4" />
                             </Button>
