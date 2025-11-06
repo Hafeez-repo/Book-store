@@ -98,7 +98,7 @@ export default function BookDetailPage({ params }: { params: { id: string } }) {
             <span className="text-muted-foreground text-sm">({book.reviews.length} reviews)</span>
           </div>
 
-          <p className="mt-6 text-3xl font-bold text-primary">${book.price.toFixed(2)}</p>
+          <p className="mt-6 text-3xl font-bold text-primary">₹{book.price.toFixed(2)}</p>
           
           <div className="mt-6 flex items-center gap-4">
             <Button size="lg" className="text-lg flex-1 md:flex-none" onClick={handleAddToCart} disabled={isUserLoading}>

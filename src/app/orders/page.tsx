@@ -33,10 +33,10 @@ function OrderCard({ order }: { order: OrderWithBooks }) {
         </div>
         <div className="text-right">
           <p className="text-sm text-muted-foreground">Total</p>
-          <p className="text-lg font-bold">${order.totalPrice.toFixed(2)}</p>
+          <p className="text-lg font-bold">₹{order.totalPrice.toFixed(2)}</p>
         </div>
       </CardHeader>
-      <CardContent className="pt-0">
+      <CardContent>
         <Separator className="mb-4" />
         <div className="space-y-4">
           {order.books.map((book, index) => {
@@ -50,7 +50,7 @@ function OrderCard({ order }: { order: OrderWithBooks }) {
                 <div>
                   <h3 className="font-semibold">{book.title}</h3>
                   <p className="text-sm text-muted-foreground">{book.author.name}</p>
-                  <p className="text-sm text-primary font-medium">${book.price.toFixed(2)}</p>
+                  <p className="text-sm text-primary font-medium">₹{book.price.toFixed(2)}</p>
                 </div>
               </div>
             )

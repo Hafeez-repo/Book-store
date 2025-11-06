@@ -36,7 +36,7 @@ export function BookCard({ book, className }: BookCardProps) {
             </h3>
             <p className="text-sm text-muted-foreground mt-1">{book.author.name}</p>
             <div className="flex items-center justify-between mt-3">
-              <p className="text-lg font-semibold text-primary">${book.price.toFixed(2)}</p>
+              <p className="text-lg font-semibold text-primary">₹{book.price.toFixed(2)}</p>
               <StarRating rating={book.rating} size={16} />
             </div>
           </div>

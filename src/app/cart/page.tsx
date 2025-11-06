@@ -146,7 +146,7 @@ export default function CartPage() {
                         <p className="text-sm text-muted-foreground">{item.book.author.name}</p>
                       </div>
                       <div className="flex items-center justify-between mt-2">
-                        <p className="text-lg font-semibold text-primary">${item.book.price.toFixed(2)}</p>
+                        <p className="text-lg font-semibold text-primary">₹{item.book.price.toFixed(2)}</p>
                         <div className="flex items-center gap-2">
                             <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}>
                                 <Minus className="h-4 w-4" />
@@ -175,16 +175,16 @@ export default function CartPage() {
               <CardContent className="pt-6 space-y-4">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Subtotal</span>
-                  <span>${subtotal.toFixed(2)}</span>
+                  <span>₹{subtotal.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Taxes</span>
-                  <span>${taxes.toFixed(2)}</span>
+                  <span>₹{taxes.toFixed(2)}</span>
                 </div>
                 <Separator />
                 <div className="flex justify-between font-bold text-lg">
                   <span>Total</span>
-                  <span>${total.toFixed(2)}</span>
+                  <span>₹{total.toFixed(2)}</span>
                 </div>
               </CardContent>
               <CardFooter>
@@ -207,5 +207,3 @@ export default function CartPage() {
     </div>
   );
 }
-
-    
