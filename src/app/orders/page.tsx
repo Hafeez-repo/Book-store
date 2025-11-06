@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -23,7 +24,7 @@ function OrderCard({ order }: { order: OrderWithBooks }) {
     <Card>
       <CardHeader className="flex flex-row justify-between items-start">
         <div>
-          <CardTitle className="font-headline text-lg">Order #{order.id.substring(0, 7)}</CardTitle>
+          <CardTitle className="font-headline text-lg">Order #{order.id}</CardTitle>
           <CardDescription>
             Placed on <ClientFormattedDate dateString={order.timestamp.toISOString()} />
           </CardDescription>
@@ -125,3 +126,5 @@ export default function MyOrdersPage() {
     </div>
   );
 }
+
+    

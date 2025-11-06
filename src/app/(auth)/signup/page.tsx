@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -87,7 +88,7 @@ export default function SignupPage() {
           </CardTitle>
           <CardDescription>Join our community of book lovers.</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="pt-6 space-y-4">
           <div className="space-y-2">
             <Label htmlFor="name">Name</Label>
             <Input
@@ -139,3 +140,5 @@ export default function SignupPage() {
     </div>
   );
 }
+
+    

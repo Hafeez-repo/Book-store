@@ -1,3 +1,4 @@
+
 import { getBooks, getAuthors, getCategories } from "@/lib/data";
 import { BookCard } from "@/components/books/BookCard";
 import {
@@ -41,7 +42,7 @@ export default function ShopPage() {
             <CardHeader>
               <CardTitle className="text-lg font-headline">Filters</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="pt-6 space-y-6">
               <div>
                 <h3 className="font-semibold text-foreground mb-3">Category</h3>
                 <div className="space-y-2">
@@ -112,3 +113,5 @@ export default function ShopPage() {
     </div>
   );
 }
+
+    

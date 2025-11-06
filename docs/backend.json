@@ -1,3 +1,4 @@
+
 {
   "entities": {
     "User": {
@@ -105,11 +106,11 @@
         },
         "userId": {
           "type": "string",
-          "description": "Reference to User. (Relationship: User 1:N Order)"
+          "description": "The ID of the user who placed the order. (Relationship: User 1:N Order)"
         },
         "bookIds": {
           "type": "array",
-          "description": "References to Books. (Relationship: Book N:N Order)",
+          "description": "An array of book IDs included in the order. (Relationship: Book N:N Order)",
           "items": {
             "type": "string"
           }
@@ -153,11 +154,11 @@
         },
         "bookId": {
           "type": "string",
-          "description": "Reference to Book. (Relationship: Book 1:N Review)"
+          "description": "The ID of the book being reviewed. (Relationship: Book 1:N Review)"
         },
         "userId": {
           "type": "string",
-          "description": "Reference to User. (Relationship: User 1:N Review)"
+          "description": "The ID of the user who wrote the review. (Relationship: User 1:N Review)"
         },
         "rating": {
           "type": "number",
@@ -194,11 +195,11 @@
         },
         "userId": {
           "type": "string",
-          "description": "Reference to User. (Relationship: User 1:N CartItem)"
+          "description": "The ID of the user who owns the cart. (Relationship: User 1:N CartItem)"
         },
         "bookId": {
           "type": "string",
-          "description": "Reference to Book. (Relationship: Book 1:N CartItem)"
+          "description": "The ID of the book in the cart. (Relationship: Book 1:1 CartItem)"
         },
         "quantity": {
           "type": "number",
@@ -224,11 +225,11 @@
         },
         "userId": {
           "type": "string",
-          "description": "Reference to User. (Relationship: User 1:N WishlistItem)"
+          "description": "The ID of the user who owns the wishlist. (Relationship: User 1:N WishlistItem)"
         },
         "bookId": {
           "type": "string",
-          "description": "Reference to Book. (Relationship: Book 1:1 WishlistItem)"
+          "description": "The ID of the book in the wishlist. (Relationship: Book 1:1 WishlistItem)"
         }
       },
       "required": [
@@ -253,7 +254,7 @@
           "schema": {
             "$ref": "#/backend/entities/User"
           },
-          "description": "Stores user profile information.  Access is restricted to the user (or an admin).",
+          "description": "Stores user profile information. The {userId} is the Firebase Auth UID.",
           "params": [
             {
               "name": "userId",
@@ -269,7 +270,7 @@
           "schema": {
             "$ref": "#/backend/entities/Book"
           },
-          "description": "Stores book information. Publicly readable.",
+          "description": "Stores all book information for the store. This collection is publicly readable.",
           "params": [
             {
               "name": "bookId",
@@ -285,7 +286,7 @@
           "schema": {
             "$ref": "#/backend/entities/CartItem"
           },
-          "description": "Stores items in the user's shopping cart. Access is restricted to the user.",
+          "description": "A subcollection storing items in a specific user's shopping cart. Access is restricted to the user.",
           "params": [
             {
               "name": "userId",
@@ -305,7 +306,7 @@
           "schema": {
             "$ref": "#/backend/entities/WishlistItem"
           },
-          "description": "Stores items in the user's wishlist. Access is restricted to the user.",
+          "description": "A subcollection storing items in a specific user's wishlist. Access is restricted to the user.",
           "params": [
             {
               "name": "userId",
@@ -325,7 +326,7 @@
           "schema": {
             "$ref": "#/backend/entities/Order"
           },
-          "description": "Stores order information for a user. Access is restricted to the user.",
+          "description": "A subcollection storing order history for a specific user. Access is restricted to the user.",
           "params": [
             {
               "name": "userId",
@@ -345,7 +346,7 @@
           "schema": {
             "$ref": "#/backend/entities/Review"
           },
-          "description": "Stores reviews for a specific book. Includes denormalized 'userId' for authorization. Admin reviews the content and confirms the approval",
+          "description": "A subcollection storing reviews for a specific book. Publicly readable, but only the review author can create one.",
           "params": [
             {
               "name": "bookId",
@@ -357,24 +358,10 @@
             }
           ]
         }
-      },
-      {
-        "path": "/roles_.admin/{userId}",
-        "definition": {
-          "entityName": "adminRole",
-          "schema": {
-            "$ref": "#/backend/entities/User"
-          },
-          "description": "DBAC: if a document exists here for a user id, they are an admin.",
-          "params": [
-            {
-              "name": "userId",
-              "description": "The Firebase UID of the user."
-            }
-          ]
-        }
       }
     ],
-    "reasoning": "The Firestore structure is designed to support the online bookstore application, focusing on user authentication, book browsing, order management, and reviews. The structure prioritizes authorization independence by denormalizing user roles into the documents where authorization is required, eliminating the need for `get()` calls in security rules. This design supports secure `list` operations and atomic operations for transactions and batches.\n\n**Authorization Independence and QAPs:**\n*   **User Data:** User profiles are stored under `/users/{userId}`.  This path-based ownership ensures that only the authenticated user (or an admin) can access their data. No denormalization is required here because access is solely based on the user's `uid` matching the `userId` in the path.\n*   **Books:** Book data is stored in the `/books/{bookId}` collection.  This collection is publicly readable, allowing all users to browse books. Administrative access for creating, updating, and deleting books would rely on a separate `/roles_admin/{uid}` collection to grant admin privileges (DBAC).\n*   **Cart Items:** Cart items are stored under `/users/{userId}/cartItems/{cartItemId}`.  This structure provides path-based ownership, ensuring that only the authenticated user can manage their cart.  This structure inherently supports secure list operations (QAPs) because listing cart items is always scoped to a specific user.\n*   **Wishlist Items:** Wishlist items are stored under `/users/{userId}/wishlistItems/{wishlistItemId}` to ensure only the owner can manage their wishlist.\n*   **Orders:** Orders are stored under `/users/{userId}/orders/{orderId}`. This path-based ownership ensures that only the authenticated user can access their own order history.  Admin access would be controlled via the `/roles_admin/{uid}` collection.\n*   **Reviews:** Reviews are stored in a subcollection under each book document at `/books/{bookId}/reviews/{reviewId}`. Each review document also contains the `userId` of the reviewer and the `status` field. The `status` field is set by Review Sentiment Tool. In the meantime, the admin reviews the content and confirms the approval.\n\nThis structure allows for easy implementation of security rules, as most data access is based on simple path-based ownership or membership checks.  It also enables efficient querying and data management, as the data is organized in a way that reflects the application's core features and user interactions."
+    "reasoning": "The Firestore structure is designed to support the online bookstore application, focusing on user authentication, book browsing, order management, and reviews. The structure prioritizes authorization independence by denormalizing user roles into the documents where authorization is required, eliminating the need for `get()` calls in security rules. This design supports secure `list` operations and atomic operations for transactions and batches.\n\n**Data Organization:**\n* **`/users/{userId}`**: Each user has a root document containing their public profile. All user-specific, private data (like carts, orders, and wishlists) are stored in subcollections within this user document. This is a best practice for security, as rules can easily lock down all subcollections to just the document owner.\n* **`/books/{bookId}`**: This is a root-level collection containing all book information. It's kept separate from users because it's public data that all users need to access. Storing reviews as a subcollection of each book keeps related data together.\n\nThis structure allows for efficient and secure data access. For example, to get a user's cart, you only need to query the `/users/{userId}/cartItems` subcollection, and security rules can ensure that only the authenticated user with the matching `{userId}` can do so."
   }
 }
+
+    

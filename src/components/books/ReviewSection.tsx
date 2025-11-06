@@ -1,3 +1,4 @@
+
 'use client';
 
 import type { Book } from '@/lib/types';
@@ -25,7 +26,7 @@ export function ReviewSection({ book, user }: ReviewSectionProps) {
                 <CardHeader>
                     <CardTitle className="text-lg font-headline">Leave a Review</CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="pt-6">
                     <ReviewForm bookId={book.id} user={user} />
                 </CardContent>
             </Card>
@@ -64,7 +65,7 @@ export function ReviewSection({ book, user }: ReviewSectionProps) {
             <CardHeader>
               <CardTitle className="text-lg font-headline">Overall Rating</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-6">
                 <div className="flex items-center gap-2">
                     <p className="text-4xl font-bold text-primary">{book.rating.toFixed(1)}</p>
                     <div className='flex flex-col'>
@@ -80,3 +81,5 @@ export function ReviewSection({ book, user }: ReviewSectionProps) {
     </section>
   );
 }
+
+    

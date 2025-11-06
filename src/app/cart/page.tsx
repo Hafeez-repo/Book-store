@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -171,7 +172,7 @@ export default function CartPage() {
               <CardHeader>
                 <CardTitle className="font-headline text-xl">Order Summary</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="pt-6 space-y-4">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Subtotal</span>
                   <span>${subtotal.toFixed(2)}</span>
@@ -206,3 +207,5 @@ export default function CartPage() {
     </div>
   );
 }
+
+    
