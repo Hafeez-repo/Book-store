@@ -10,7 +10,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Separator } from "@/components/ui/separator";
 import { Trash2, Plus, Minus } from "lucide-react";
 import { useCollection, useFirebase, useUser, useMemoFirebase } from '@/firebase';
-import { collection, doc } from 'firebase/firestore';
+import { collection, doc, writeBatch, serverTimestamp } from 'firebase/firestore';
 import { deleteDocumentNonBlocking, updateDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 import { useToast } from '@/hooks/use-toast';
 import type { CartItem, Book } from '@/lib/types';
@@ -57,10 +57,62 @@ export default function CartPage() {
     const docRef = doc(firestore, 'users', user.uid, 'cartItems', cartItemId);
     updateDocumentNonBlocking(docRef, { quantity: newQuantity });
   }
-  
+
   const subtotal = cartItems.reduce((acc, item) => acc + (item.book?.price || 0) * item.quantity, 0);
   const taxes = subtotal * 0.08;
   const total = subtotal + taxes;
+
+  const handleCheckout = async () => {
+    if (!user || !firestore || cartItems.length === 0) {
+      toast({
+        variant: 'destructive',
+        title: 'Checkout Error',
+        description: user ? 'Your cart is empty.' : 'You must be logged in to check out.',
+      });
+      return;
+    }
+
+    try {
+      // 1. Create a new order document
+      const ordersRef = collection(firestore, 'users', user.uid, 'orders');
+      const newOrderRef = doc(ordersRef); // Create a new doc with a generated ID
+      
+      const orderData = {
+        id: newOrderRef.id,
+        userId: user.uid,
+        bookIds: cartItems.map(item => item.bookId),
+        totalPrice: total,
+        paymentStatus: 'pending', // Assume payment is handled separately
+        timestamp: serverTimestamp(),
+        status: 'pending',
+      };
+      
+      // 2. Clear the cart using a batched write
+      const batch = writeBatch(firestore);
+      batch.set(newOrderRef, orderData); // Add the new order to the batch
+
+      cartItemsData?.forEach(item => {
+        const itemRef = doc(firestore, 'users', user.uid, 'cartItems', item.id);
+        batch.delete(itemRef);
+      });
+
+      await batch.commit();
+
+      toast({
+        title: 'Order Placed!',
+        description: 'Your order has been successfully placed.',
+      });
+
+    } catch (error) {
+      console.error("Error placing order: ", error);
+      toast({
+        variant: 'destructive',
+        title: 'Uh oh!',
+        description: 'There was an error placing your order. Please try again.',
+      });
+    }
+  };
+
 
   if (!isClient || isLoading) {
     // You can add a loading spinner here
@@ -135,7 +187,7 @@ export default function CartPage() {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button className="w-full" size="lg">Proceed to Checkout</Button>
+                <Button className="w-full" size="lg" onClick={handleCheckout}>Proceed to Checkout</Button>
               </CardFooter>
             </Card>
           </div>
