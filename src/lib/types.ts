@@ -31,3 +31,16 @@ export type Category = {
   id: string;
   name: string;
 }
+
+export type CartItem = {
+    id: string;
+    userId: string;
+    bookId: string;
+    quantity: number;
+};
+
+export type WishlistItem = {
+    id: string;
+    userId: string;
+    bookId: string;
+};

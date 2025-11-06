@@ -3,29 +3,67 @@
 import { useState, useEffect } from 'react';
 import Image from "next/image";
 import Link from "next/link";
-import { getBooks } from "@/lib/data";
+import { getBookById } from "@/lib/data";
 import { placeholderImages } from "@/lib/placeholder-images";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Trash2 } from "lucide-react";
+import { useCollection, useFirebase, useUser, useMemoFirebase } from '@/firebase';
+import { collection, doc } from 'firebase/firestore';
+import { deleteDocumentNonBlocking } from '@/firebase/non-blocking-updates';
+import { useToast } from '@/hooks/use-toast';
+import type { CartItem, Book } from '@/lib/types';
+
+
+interface CartItemWithBook extends CartItem {
+    book: Book | undefined;
+}
 
 export default function CartPage() {
   const [isClient, setIsClient] = useState(false);
+  const { user } = useUser();
+  const { firestore } = useFirebase();
+  const { toast } = useToast();
+
+  const cartItemsRef = useMemoFirebase(() => {
+    if (!user || !firestore) return null;
+    return collection(firestore, 'users', user.uid, 'cartItems');
+  }, [user, firestore]);
+
+  const { data: cartItemsData, isLoading } = useCollection<CartItem>(cartItemsRef);
+
+  const cartItems: CartItemWithBook[] = (cartItemsData || []).map(item => ({
+      ...item,
+      book: getBookById(item.bookId),
+  }));
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  // Mock cart data
-  const cartItems = getBooks().slice(0, 2).map((book, index) => ({ ...book, quantity: index + 1 }));
-  const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const handleDelete = (cartItemId: string) => {
+    if (!user || !firestore) return;
+    const docRef = doc(firestore, 'users', user.uid, 'cartItems', cartItemId);
+    deleteDocumentNonBlocking(docRef);
+    toast({
+        title: 'Item removed',
+        description: 'The item has been removed from your cart.',
+    });
+  };
+  
+  const subtotal = cartItems.reduce((acc, item) => acc + (item.book?.price || 0) * item.quantity, 0);
   const taxes = subtotal * 0.08;
   const total = subtotal + taxes;
 
-  if (!isClient) {
-    return null; // Render nothing on the server to avoid hydration errors
+  if (!isClient || isLoading) {
+    // You can add a loading spinner here
+    return (
+        <div className="container mx-auto px-4 py-12 text-center">
+            <p>Loading your cart...</p>
+        </div>
+    );
   }
 
   return (
@@ -36,23 +74,24 @@ export default function CartPage() {
         <div className="grid md:grid-cols-3 gap-8">
           <div className="md:col-span-2 space-y-4">
             {cartItems.map((item) => {
-              const image = placeholderImages.find(p => p.id === item.coverImage);
+              if (!item.book) return null;
+              const image = placeholderImages.find(p => p.id === item.book?.coverImage);
               return (
                 <Card key={item.id} className="overflow-hidden">
                   <CardContent className="flex gap-4 p-4">
                     <div className="relative h-32 w-24 flex-shrink-0">
-                      {image && <Image src={image.imageUrl} alt={item.title} fill className="object-cover rounded-md" />}
+                      {image && <Image src={image.imageUrl} alt={item.book.title} fill className="object-cover rounded-md" />}
                     </div>
                     <div className="flex-1 flex flex-col justify-between">
                       <div>
-                        <h2 className="font-headline font-semibold">{item.title}</h2>
-                        <p className="text-sm text-muted-foreground">{item.author.name}</p>
+                        <h2 className="font-headline font-semibold">{item.book.title}</h2>
+                        <p className="text-sm text-muted-foreground">{item.book.author.name}</p>
                       </div>
                       <div className="flex items-center justify-between mt-2">
-                        <p className="text-lg font-semibold text-primary">${item.price.toFixed(2)}</p>
+                        <p className="text-lg font-semibold text-primary">${item.book.price.toFixed(2)}</p>
                         <div className="flex items-center gap-2">
                             <Input type="number" defaultValue={item.quantity} className="w-16 h-9" />
-                            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-destructive">
+                            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-destructive" onClick={() => handleDelete(item.id)}>
                                 <Trash2 className="h-4 w-4" />
                             </Button>
                         </div>
@@ -92,10 +131,12 @@ export default function CartPage() {
         </div>
       ) : (
         <div className="text-center py-16">
-          <h2 className="text-2xl font-semibold">Your cart is empty</h2>
-          <p className="mt-2 text-muted-foreground">Looks like you haven't added any books yet.</p>
+          <h2 className="text-2xl font-semibold">{user ? "Your cart is empty" : "Please log in"}</h2>
+          <p className="mt-2 text-muted-foreground">
+            { user ? "Looks like you haven't added any books yet." : "Log in to see your cart and start shopping."}
+          </p>
           <Button asChild className="mt-6">
-            <Link href="/shop">Start Shopping</Link>
+            <Link href={user ? "/shop" : "/login"}>{user ? "Start Shopping" : "Log In"}</Link>
           </Button>
         </div>
       )}

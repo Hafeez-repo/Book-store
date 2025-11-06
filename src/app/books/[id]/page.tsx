@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { StarRating } from '@/components/books/StarRating';
 import { Separator } from '@/components/ui/separator';
 import { ReviewSection } from '@/components/books/ReviewSection';
-import { ShoppingCart } from 'lucide-react';
+import { Heart, ShoppingCart } from 'lucide-react';
 import { useFirebase, useUser } from '@/firebase';
 import { addDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 import { collection } from 'firebase/firestore';
@@ -48,6 +48,27 @@ export default function BookDetailPage({ params }: { params: { id: string } }) {
     });
   };
 
+  const handleAddToWishlist = () => {
+    if (!user) {
+      toast({
+        variant: 'destructive',
+        title: 'Please log in',
+        description: 'You need to be logged in to add items to your wishlist.',
+      });
+      return;
+    }
+    if (!firestore) return;
+    const wishlistItemsRef = collection(firestore, 'users', user.uid, 'wishlistItems');
+    addDocumentNonBlocking(wishlistItemsRef, {
+      userId: user.uid,
+      bookId: book.id,
+    });
+    toast({
+      title: 'Added to Wishlist',
+      description: `"${book.title}" has been added to your wishlist.`,
+    });
+  };
+
   const image = placeholderImages.find((img) => img.id === book.coverImage);
 
   return (
@@ -84,7 +105,8 @@ export default function BookDetailPage({ params }: { params: { id: string } }) {
               <ShoppingCart className="mr-2 h-5 w-5" />
               Add to Cart
             </Button>
-            <Button size="lg" variant="outline" className="text-lg flex-1 md:flex-none">
+            <Button size="lg" variant="outline" className="text-lg flex-1 md:flex-none" onClick={handleAddToWishlist} disabled={isUserLoading}>
+              <Heart className="mr-2 h-5 w-5" />
               Add to Wishlist
             </Button>
           </div>
