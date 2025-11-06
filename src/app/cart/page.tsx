@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Image from "next/image";
 import Link from "next/link";
 import { getBooks } from "@/lib/data";
@@ -11,11 +12,21 @@ import { Separator } from "@/components/ui/separator";
 import { Trash2 } from "lucide-react";
 
 export default function CartPage() {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   // Mock cart data
   const cartItems = getBooks().slice(0, 2).map((book, index) => ({ ...book, quantity: index + 1 }));
   const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const taxes = subtotal * 0.08;
   const total = subtotal + taxes;
+
+  if (!isClient) {
+    return null; // Render nothing on the server to avoid hydration errors
+  }
 
   return (
     <div className="container mx-auto px-4 py-12">
