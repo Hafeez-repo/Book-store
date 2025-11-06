@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import React from 'react';
-import { useUser, useAuth, useCollection, useMemoFirebase } from '@/firebase';
+import { useUser, useAuth, useCollection, useMemoFirebase, useFirestore } from '@/firebase';
 import { signOut } from 'firebase/auth';
 import { collection } from 'firebase/firestore';
 import {
@@ -36,11 +36,12 @@ export default function Header() {
   const pathname = usePathname();
   const { user, isUserLoading } = useUser();
   const auth = useAuth();
+  const firestore = useFirestore();
 
   const cartItemsRef = useMemoFirebase(() => {
-    if (!user || !auth) return null;
-    return collection(auth.app.options.projectId!, 'users', user.uid, 'cartItems');
-  }, [user, auth]);
+    if (!user || !firestore) return null;
+    return collection(firestore, 'users', user.uid, 'cartItems');
+  }, [user, firestore]);
 
   const { data: cartItems } = useCollection<CartItem>(cartItemsRef);
 
