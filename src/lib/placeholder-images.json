@@ -1,3 +1,94 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-1",
+      "description": "A cozy, well-lit library with rows of books.",
+      "imageUrl": "https://images.unsplash.com/photo-1614849963640-9cc74b2a826f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxsaWJyYXJ5JTIwYm9va3N8ZW58MHx8fHwxNzYyMzgyNTk4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "library books"
+    },
+    {
+      "id": "book-1",
+      "description": "Book cover for The Great Gatsby",
+      "imageUrl": "https://images.unsplash.com/photo-1562859176-8cc1200999b1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8dmludGFnZSUyMGJvb2t8ZW58MHx8fHwxNzYyNDMwMTMyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "vintage book"
+    },
+    {
+      "id": "book-2",
+      "description": "Book cover for 1984",
+      "imageUrl": "https://images.unsplash.com/photo-1687678952427-72b8f462d855?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxhYnN0cmFjdCUyMGNvdmVyfGVufDB8fHx8MTc2MjM1MTQ0OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "abstract cover"
+    },
+    {
+      "id": "book-3",
+      "description": "Book cover for To Kill a Mockingbird",
+      "imageUrl": "https://images.unsplash.com/photo-1633504798516-2cf5e3f94621?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxtaW5pbWFsaXN0JTIwYm9va3xlbnwwfHx8fDE3NjI0MzAxMzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "minimalist book"
+    },
+    {
+      "id": "book-4",
+      "description": "Book cover for The Catcher in the Rye",
+      "imageUrl": "https://images.unsplash.com/photo-1561070791-2526d30994b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxncmFwaGljJTIwZGVzaWdufGVufDB8fHx8MTc2MjQxNDM3Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "graphic design"
+    },
+    {
+      "id": "book-5",
+      "description": "Book cover for Pride and Prejudice",
+      "imageUrl": "https://images.unsplash.com/photo-1760120482171-d9d5468f75fd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjbGFzc2ljJTIwbm92ZWx8ZW58MHx8fHwxNzYyMzQ5ODg1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "classic novel"
+    },
+    {
+      "id": "book-6",
+      "description": "Book cover for The Hobbit",
+      "imageUrl": "https://images.unsplash.com/photo-1720253814850-0b81a96f52ff?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxmYW50YXN5JTIwbWFwfGVufDB8fHx8MTc2MjMyMzYyOXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "fantasy map"
+    },
+    {
+      "id": "book-7",
+      "description": "Book cover for Moby Dick",
+      "imageUrl": "https://images.unsplash.com/photo-1761079398295-02bf47901cb5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxvY2VhbiUyMGRyYXdpbmd8ZW58MHx8fHwxNzYyNDMwMTMyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "ocean drawing"
+    },
+    {
+      "id": "book-8",
+      "description": "Book cover for War and Peace",
+      "imageUrl": "https://images.unsplash.com/photo-1719297493602-c49fb69e0299?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxoaXN0b3JpYyUyMHBhaW50aW5nfGVufDB8fHx8MTc2MjM4MTIwOHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "historic painting"
+    },
+    {
+      "id": "book-9",
+      "description": "Book cover for Hamlet",
+      "imageUrl": "https://images.unsplash.com/photo-1725399633864-ae5493e9f1bb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxza3VsbCUyMGlsbHVzdHJhdGlvbnxlbnwwfHx8fDE3NjI0MzAxMzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "skull illustration"
+    },
+    {
+      "id": "book-10",
+      "description": "Book cover for Great Expectations",
+      "imageUrl": "https://images.unsplash.com/photo-1614306539511-4a8d4d690c57?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxkYXJrJTIwYWxsZXl8ZW58MHx8fHwxNzYyNDMwMTMyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "dark alley"
+    },
+    {
+      "id": "book-11",
+      "description": "Book cover for The Odyssey",
+      "imageUrl": "https://images.unsplash.com/photo-1667341822219-e43df474fb87?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxncmVlayUyMHBvdHRlcnl8ZW58MHx8fHwxNzYyNDMwMTMyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "greek pottery"
+    },
+    {
+      "id": "book-12",
+      "description": "Book cover for Brave New World",
+      "imageUrl": "https://images.unsplash.com/photo-1634585738250-09ee92cae0f8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxmdXR1cmlzdGljJTIwZGVzaWdufGVufDB8fHx8MTc2MjMzNzc4N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "futuristic design"
+    },
+    {
+      "id": "user-1",
+      "description": "User avatar for Jane Doe",
+      "imageUrl": "https://images.unsplash.com/photo-1592621385612-4d7129426394?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx3b21hbiUyMHBvcnRyYWl0fGVufDB8fHx8MTc2MjMzOTU2MHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "woman portrait"
+    },
+    {
+      "id": "user-2",
+      "description": "User avatar for John Smith",
+      "imageUrl": "https://images.unsplash.com/photo-1560250097-0b93528c311a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjI0MTg2MjZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "man portrait"
+    }
+  ]
 }
