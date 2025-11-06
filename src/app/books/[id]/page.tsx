@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getBookById } from '@/lib/data';
@@ -7,13 +9,41 @@ import { StarRating } from '@/components/books/StarRating';
 import { Separator } from '@/components/ui/separator';
 import { ReviewSection } from '@/components/books/ReviewSection';
 import { ShoppingCart } from 'lucide-react';
+import { useFirebase, useUser } from '@/firebase';
+import { addDocumentNonBlocking } from '@/firebase/non-blocking-updates';
+import { collection } from 'firebase/firestore';
+import { useToast } from '@/hooks/use-toast';
 
 export default function BookDetailPage({ params }: { params: { id: string } }) {
   const book = getBookById(params.id);
+  const { firestore } = useFirebase();
+  const { user, isUserLoading } = useUser();
+  const { toast } = useToast();
 
   if (!book) {
     notFound();
   }
+
+  const handleAddToCart = () => {
+    if (!user) {
+      toast({
+        variant: 'destructive',
+        title: 'Please log in',
+        description: 'You need to be logged in to add items to your cart.',
+      });
+      return;
+    }
+    const cartItemsRef = collection(firestore, 'users', user.uid, 'cartItems');
+    addDocumentNonBlocking(cartItemsRef, {
+      userId: user.uid,
+      bookId: book.id,
+      quantity: 1,
+    });
+    toast({
+      title: 'Added to Cart',
+      description: `"${book.title}" has been added to your cart.`,
+    });
+  };
 
   const image = placeholderImages.find((img) => img.id === book.coverImage);
 
@@ -47,7 +77,7 @@ export default function BookDetailPage({ params }: { params: { id: string } }) {
           <p className="mt-6 text-3xl font-bold text-primary">${book.price.toFixed(2)}</p>
           
           <div className="mt-6 flex items-center gap-4">
-            <Button size="lg" className="text-lg flex-1 md:flex-none">
+            <Button size="lg" className="text-lg flex-1 md:flex-none" onClick={handleAddToCart} disabled={isUserLoading}>
               <ShoppingCart className="mr-2 h-5 w-5" />
               Add to Cart
             </Button>
