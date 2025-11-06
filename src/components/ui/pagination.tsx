@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -48,19 +49,17 @@ const PaginationLink = ({
   size = "icon",
   ...props
 }: PaginationLinkProps) => (
-  <PaginationItem>
-    <Link
-      aria-current={isActive ? "page" : undefined}
-      className={cn(
-        buttonVariants({
-          variant: isActive ? "outline" : "ghost",
-          size,
-        }),
-        className
-      )}
-      {...props}
-    />
-  </PaginationItem>
+  <Link
+    aria-current={isActive ? "page" : undefined}
+    className={cn(
+      buttonVariants({
+        variant: isActive ? "outline" : "ghost",
+        size,
+      }),
+      className
+    )}
+    {...props}
+  />
 )
 PaginationLink.displayName = "PaginationLink"
 
