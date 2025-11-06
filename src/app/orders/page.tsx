@@ -24,9 +24,11 @@ function OrderCard({ order }: { order: OrderWithBooks }) {
     <Card>
       <CardHeader className="flex flex-row justify-between items-start">
         <div>
-          <CardTitle className="font-headline text-lg">Order #{order.id}</CardTitle>
+          <CardTitle className="font-headline text-lg">Order Details</CardTitle>
           <CardDescription>
-            Placed on <ClientFormattedDate dateString={order.timestamp.toISOString()} />
+            <span>Placed on <ClientFormattedDate dateString={order.timestamp.toISOString()} /></span>
+            <span className="mx-2">|</span>
+            <span>Order ID: #{order.id.substring(0, 7)}</span>
           </CardDescription>
         </div>
         <div className="text-right">
@@ -34,7 +36,7 @@ function OrderCard({ order }: { order: OrderWithBooks }) {
           <p className="text-lg font-bold">${order.totalPrice.toFixed(2)}</p>
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="pt-0">
         <Separator className="mb-4" />
         <div className="space-y-4">
           {order.books.map((book, index) => {
@@ -126,5 +128,3 @@ export default function MyOrdersPage() {
     </div>
   );
 }
-
-    
