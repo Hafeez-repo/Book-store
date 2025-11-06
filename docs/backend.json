@@ -152,6 +152,10 @@
           "type": "number",
           "description": "The total price of the order."
         },
+        "paymentMethod": {
+            "type": "string",
+            "description": "The payment method used for the order (e.g. credit-card, cod)"
+        },
         "paymentStatus": {
           "type": "string",
           "description": "The payment status of the order (e.g., pending, completed, failed)."
@@ -171,6 +175,7 @@
         "userId",
         "items",
         "totalPrice",
+        "paymentMethod",
         "paymentStatus",
         "timestamp",
         "status"

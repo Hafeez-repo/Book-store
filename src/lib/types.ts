@@ -59,6 +59,7 @@ export type Order = {
     userId: string;
     items: OrderItem[];
     totalPrice: number;
+    paymentMethod: string;
     paymentStatus: string;
     timestamp: any;
     status: string;
