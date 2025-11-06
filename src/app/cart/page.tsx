@@ -7,12 +7,11 @@ import { getBookById } from "@/lib/data";
 import { placeholderImages } from "@/lib/placeholder-images";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { Trash2 } from "lucide-react";
+import { Trash2, Plus, Minus } from "lucide-react";
 import { useCollection, useFirebase, useUser, useMemoFirebase } from '@/firebase';
 import { collection, doc } from 'firebase/firestore';
-import { deleteDocumentNonBlocking } from '@/firebase/non-blocking-updates';
+import { deleteDocumentNonBlocking, updateDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 import { useToast } from '@/hooks/use-toast';
 import type { CartItem, Book } from '@/lib/types';
 
@@ -52,6 +51,12 @@ export default function CartPage() {
         description: 'The item has been removed from your cart.',
     });
   };
+
+  const handleUpdateQuantity = (cartItemId: string, newQuantity: number) => {
+    if (!user || !firestore || newQuantity < 1) return;
+    const docRef = doc(firestore, 'users', user.uid, 'cartItems', cartItemId);
+    updateDocumentNonBlocking(docRef, { quantity: newQuantity });
+  }
   
   const subtotal = cartItems.reduce((acc, item) => acc + (item.book?.price || 0) * item.quantity, 0);
   const taxes = subtotal * 0.08;
@@ -90,7 +95,13 @@ export default function CartPage() {
                       <div className="flex items-center justify-between mt-2">
                         <p className="text-lg font-semibold text-primary">${item.book.price.toFixed(2)}</p>
                         <div className="flex items-center gap-2">
-                            <Input type="number" defaultValue={item.quantity} className="w-16 h-9" />
+                            <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}>
+                                <Minus className="h-4 w-4" />
+                            </Button>
+                            <span className="font-bold w-4 text-center">{item.quantity}</span>
+                            <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}>
+                                <Plus className="h-4 w-4" />
+                            </Button>
                             <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-destructive" onClick={() => handleDelete(item.id)}>
                                 <Trash2 className="h-4 w-4" />
                             </Button>
