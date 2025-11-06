@@ -3,7 +3,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, useRouter } from 'next/navigation';
 import { getBookById } from '@/lib/data';
 import { placeholderImages } from '@/lib/placeholder-images';
 import { Button } from '@/components/ui/button';
@@ -15,8 +15,7 @@ import { useFirebase, useUser } from '@/firebase';
 import { addDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 import { collection } from 'firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
-import React from 'react';
-import { ToastAction } from '@/components/ui/toast';
+import React, { useState } from 'react';
 
 export default function BookDetailPage({ params }: { params: { id: string } }) {
   const resolvedParams = React.use(params);
@@ -24,6 +23,8 @@ export default function BookDetailPage({ params }: { params: { id: string } }) {
   const { firestore } = useFirebase();
   const { user, isUserLoading } = useUser();
   const { toast } = useToast();
+  const router = useRouter();
+  const [isAddedToCart, setIsAddedToCart] = useState(false);
 
   if (!book) {
     notFound();
@@ -45,15 +46,11 @@ export default function BookDetailPage({ params }: { params: { id: string } }) {
       bookId: book.id,
       quantity: 1,
     });
-    toast({
-      title: 'Added to Cart',
-      description: `"${book.title}" has been added to your cart.`,
-       action: (
-        <ToastAction asChild altText="Go to cart">
-          <Link href="/cart">Go to Cart</Link>
-        </ToastAction>
-      ),
-    });
+    setIsAddedToCart(true);
+  };
+
+  const handleGoToCart = () => {
+    router.push('/cart');
   };
 
   const handleAddToWishlist = () => {
@@ -109,10 +106,16 @@ export default function BookDetailPage({ params }: { params: { id: string } }) {
           <p className="mt-6 text-3xl font-bold text-primary">₹{book.price.toFixed(2)}</p>
           
           <div className="mt-6 flex items-center gap-4">
-            <Button size="lg" className="text-lg flex-1 md:flex-none" onClick={handleAddToCart} disabled={isUserLoading}>
-              <ShoppingCart className="mr-2 h-5 w-5" />
-              Add to Cart
-            </Button>
+            {isAddedToCart ? (
+                <Button size="lg" className="text-lg flex-1 md:flex-none" onClick={handleGoToCart}>
+                    Go to Cart
+                </Button>
+            ) : (
+                <Button size="lg" className="text-lg flex-1 md:flex-none" onClick={handleAddToCart} disabled={isUserLoading}>
+                  <ShoppingCart className="mr-2 h-5 w-5" />
+                  Add to Cart
+                </Button>
+            )}
             <Button size="lg" variant="outline" className="text-lg flex-1 md:flex-none" onClick={handleAddToWishlist} disabled={isUserLoading}>
               <Heart className="mr-2 h-5 w-5" />
               Add to Wishlist
