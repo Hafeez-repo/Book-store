@@ -44,3 +44,13 @@ export type WishlistItem = {
     userId: string;
     bookId: string;
 };
+
+export type Order = {
+    id: string;
+    userId: string;
+    bookIds: string[];
+    totalPrice: number;
+    paymentStatus: string;
+    timestamp: any;
+    status: string;
+}

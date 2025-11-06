@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Book, Menu, Search, ShoppingCart, User, LogOut } from 'lucide-react';
+import { Menu, Search, ShoppingCart, User, LogOut, Package } from 'lucide-react';
 
 import { Logo } from '@/components/icons';
 import { Button } from '@/components/ui/button';
@@ -149,6 +149,13 @@ export default function Header() {
                       </p>
                     </div>
                   </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild className="cursor-pointer">
+                    <Link href="/orders">
+                        <Package className="mr-2 h-4 w-4" />
+                        <span>My Orders</span>
+                    </Link>
+                  </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer">
                     <LogOut className="mr-2 h-4 w-4" />
