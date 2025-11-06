@@ -1,8 +1,7 @@
-
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Menu, Search, ShoppingCart, User, LogOut, Package } from 'lucide-react';
 
 import { Logo } from '@/components/icons';
@@ -10,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
-import React from 'react';
+import React, { useState } from 'react';
 import { useUser, useAuth, useCollection, useMemoFirebase, useFirestore } from '@/firebase';
 import { signOut } from 'firebase/auth';
 import { collection } from 'firebase/firestore';
@@ -34,9 +33,11 @@ const mainNavLinks = [
 
 export default function Header() {
   const pathname = usePathname();
+  const router = useRouter();
   const { user, isUserLoading } = useUser();
   const auth = useAuth();
   const firestore = useFirestore();
+  const [searchQuery, setSearchQuery] = useState('');
 
   const cartItemsRef = useMemoFirebase(() => {
     if (!user || !firestore) return null;
@@ -53,6 +54,12 @@ export default function Header() {
     if (!name) return '';
     return name.split(' ').map(n => n[0]).join('');
   }
+
+  const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!searchQuery.trim()) return;
+    router.push(`/shop?query=${searchQuery}`);
+  };
 
   const hasItemsInCart = cartItems && cartItems.length > 0;
 
@@ -124,13 +131,15 @@ export default function Header() {
 
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
           <div className="w-full flex-1 md:w-auto md:flex-none">
-            <form>
+            <form onSubmit={handleSearchSubmit}>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="search"
                   placeholder="Search books..."
                   className="w-full md:w-[250px] lg:w-[300px] pl-9"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </div>
             </form>
