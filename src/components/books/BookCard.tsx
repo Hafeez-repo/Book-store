@@ -17,7 +17,7 @@ export function BookCard({ book, className }: BookCardProps) {
 
   return (
     <Link href={`/books/${book.id}`} className={cn("group", className)}>
-      <Card className="h-full overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 hover:scale-105">
+      <Card className="h-full overflow-hidden transition-all duration-200 ease-in-out hover:shadow-2xl hover:-translate-y-2 hover:scale-110">
         <CardContent className="p-0">
           <div className="aspect-[2/3] relative w-full">
             {image && (
