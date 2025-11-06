@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useState, useActionState } from 'react';
+import { useFormStatus } from 'react-dom';
 import { Star } from 'lucide-react';
 
 import { submitReview } from '@/app/actions';
@@ -82,8 +82,7 @@ export function ReviewForm({ bookId }: ReviewFormProps) {
     return result;
   };
   
-  // @ts-ignore
-  const [state, formAction] = useFormState(handleSubmit, { success: false });
+  const [state, formAction] = useActionState(handleSubmit, { success: false });
 
   return (
     <form action={formAction} className="space-y-4">
