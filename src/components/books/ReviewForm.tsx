@@ -15,6 +15,7 @@ import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
 
 interface ReviewFormProps {
   bookId: string;
+  user: any;
 }
 
 function SubmitButton() {
@@ -55,11 +56,19 @@ function StarInput({ rating, setRating }: { rating: number; setRating: (rating: 
     );
 }
 
-export function ReviewForm({ bookId }: ReviewFormProps) {
+export function ReviewForm({ bookId, user }: ReviewFormProps) {
   const [rating, setRating] = useState(0);
   const { toast } = useToast();
 
   const handleSubmit = async (prevState: any, formData: FormData) => {
+    if (!user) {
+        toast({
+            variant: "destructive",
+            title: 'Authentication Error',
+            description: 'You must be logged in to submit a review.',
+        });
+        return { success: false, error: 'User not authenticated.' };
+    }
     formData.append('rating', rating.toString());
     formData.append('bookId', bookId);
 

@@ -33,6 +33,7 @@ export default function BookDetailPage({ params }: { params: { id: string } }) {
       });
       return;
     }
+    if (!firestore) return;
     const cartItemsRef = collection(firestore, 'users', user.uid, 'cartItems');
     addDocumentNonBlocking(cartItemsRef, {
       userId: user.uid,
@@ -107,7 +108,7 @@ export default function BookDetailPage({ params }: { params: { id: string } }) {
       </div>
       
       <div className="mt-16">
-        <ReviewSection book={book} />
+        <ReviewSection book={book} user={user} />
       </div>
     </div>
   );

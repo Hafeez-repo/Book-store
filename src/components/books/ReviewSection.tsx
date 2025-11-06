@@ -1,17 +1,19 @@
+'use client';
+
 import type { Book } from '@/lib/types';
-import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
 import { StarRating } from './StarRating';
 import { placeholderImages } from '@/lib/placeholder-images';
 import { ReviewForm } from './ReviewForm';
+import { ClientFormattedDate } from './ClientFormattedDate';
 
 interface ReviewSectionProps {
   book: Book;
+  user: any;
 }
 
-export function ReviewSection({ book }: ReviewSectionProps) {
+export function ReviewSection({ book, user }: ReviewSectionProps) {
   return (
     <section>
       <h2 className="text-2xl md:text-3xl font-headline font-bold text-foreground">
@@ -24,7 +26,7 @@ export function ReviewSection({ book }: ReviewSectionProps) {
                     <CardTitle className="text-lg font-headline">Leave a Review</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <ReviewForm bookId={book.id} />
+                    <ReviewForm bookId={book.id} user={user} />
                 </CardContent>
             </Card>
 
@@ -42,7 +44,9 @@ export function ReviewSection({ book }: ReviewSectionProps) {
                     <div className="flex-1">
                       <div className="flex items-center justify-between">
                         <p className="font-semibold">{review.userName}</p>
-                        <span className="text-xs text-muted-foreground">{new Date(review.createdAt).toLocaleDateString()}</span>
+                        <span className="text-xs text-muted-foreground">
+                          <ClientFormattedDate dateString={review.createdAt} />
+                        </span>
                       </div>
                       <StarRating rating={review.rating} size={16} className="my-1" />
                       <p className="text-muted-foreground text-sm">{review.comment}</p>
