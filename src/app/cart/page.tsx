@@ -81,7 +81,14 @@ export default function CartPage() {
       const orderData = {
         id: newOrderRef.id,
         userId: user.uid,
-        bookIds: cartItems.map(item => item.bookId),
+        items: cartItems.map(item => ({
+            bookId: item.bookId,
+            title: item.book?.title,
+            author: item.book?.author.name,
+            price: item.book?.price,
+            quantity: item.quantity,
+            coverImage: item.book?.coverImage,
+        })),
         totalPrice: total,
         paymentStatus: 'pending', // Assume payment is handled separately
         timestamp: serverTimestamp(),

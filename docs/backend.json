@@ -94,11 +94,44 @@
         "coverImageUrl"
       ]
     },
+    "OrderItem": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Order Item",
+      "type": "object",
+      "description": "Represents a single book item within an order, capturing its state at the time of purchase.",
+      "properties": {
+        "bookId": {
+          "type": "string",
+          "description": "The ID of the book."
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the book at the time of purchase."
+        },
+        "author": {
+          "type": "string",
+          "description": "The author of the book at the time of purchase."
+        },
+        "price": {
+          "type": "number",
+          "description": "The price of the book at the time of purchase."
+        },
+        "quantity": {
+          "type": "number",
+          "description": "The quantity of the book purchased."
+        },
+        "coverImage": {
+            "type": "string",
+            "description": "The cover image ID of the book at the time of purchase."
+        }
+      },
+      "required": ["bookId", "title", "author", "price", "quantity", "coverImage"]
+    },
     "Order": {
       "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "Order",
       "type": "object",
-      "description": "Represents an order placed by a user.",
+      "description": "Represents an order placed by a user, containing a snapshot of the items purchased.",
       "properties": {
         "id": {
           "type": "string",
@@ -108,11 +141,11 @@
           "type": "string",
           "description": "The ID of the user who placed the order. (Relationship: User 1:N Order)"
         },
-        "bookIds": {
+        "items": {
           "type": "array",
-          "description": "An array of book IDs included in the order. (Relationship: Book N:N Order)",
+          "description": "An array of book items included in the order.",
           "items": {
-            "type": "string"
+            "$ref": "#/backend/entities/OrderItem"
           }
         },
         "totalPrice": {
@@ -136,10 +169,11 @@
       "required": [
         "id",
         "userId",
-        "bookIds",
+        "items",
         "totalPrice",
         "paymentStatus",
-        "timestamp"
+        "timestamp",
+        "status"
       ]
     },
     "Review": {
@@ -363,5 +397,3 @@
     "reasoning": "The Firestore structure is designed to support the online bookstore application, focusing on user authentication, book browsing, order management, and reviews. The structure prioritizes authorization independence by denormalizing user roles into the documents where authorization is required, eliminating the need for `get()` calls in security rules. This design supports secure `list` operations and atomic operations for transactions and batches.\n\n**Data Organization:**\n* **`/users/{userId}`**: Each user has a root document containing their public profile. All user-specific, private data (like carts, orders, and wishlists) are stored in subcollections within this user document. This is a best practice for security, as rules can easily lock down all subcollections to just the document owner.\n* **`/books/{bookId}`**: This is a root-level collection containing all book information. It's kept separate from users because it's public data that all users need to access. Storing reviews as a subcollection of each book keeps related data together.\n\nThis structure allows for efficient and secure data access. For example, to get a user's cart, you only need to query the `/users/{userId}/cartItems` subcollection, and security rules can ensure that only the authenticated user with the matching `{userId}` can do so."
   }
 }
-
-    

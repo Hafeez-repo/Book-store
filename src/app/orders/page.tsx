@@ -5,8 +5,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useCollection, useFirebase, useUser, useMemoFirebase } from '@/firebase';
 import { collection, Timestamp } from 'firebase/firestore';
-import type { Order, Book } from '@/lib/types';
-import { getBookById } from '@/lib/data';
+import type { Order } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
@@ -14,12 +13,11 @@ import Image from 'next/image';
 import { placeholderImages } from '@/lib/placeholder-images';
 import { ClientFormattedDate } from '@/components/books/ClientFormattedDate';
 
-interface OrderWithBooks extends Omit<Order, 'bookIds' | 'timestamp'> {
-  books: (Book | undefined)[];
+interface OrderWithDate extends Omit<Order, 'timestamp'> {
   timestamp: Date;
 }
 
-function OrderCard({ order }: { order: OrderWithBooks }) {
+function OrderCard({ order }: { order: OrderWithDate }) {
   return (
     <Card>
       <CardHeader className="flex flex-row justify-between items-start">
@@ -39,18 +37,18 @@ function OrderCard({ order }: { order: OrderWithBooks }) {
       <CardContent>
         <Separator className="mb-4" />
         <div className="space-y-4">
-          {order.books.map((book, index) => {
-            if (!book) return null;
-            const image = placeholderImages.find(p => p.id === book.coverImage);
+          {order.items.map((item, index) => {
+            const image = placeholderImages.find(p => p.id === item.coverImage);
             return (
-              <div key={`${book.id}-${index}`} className="flex gap-4">
+              <div key={`${item.bookId}-${index}`} className="flex gap-4">
                 <div className="relative h-24 w-16 flex-shrink-0">
-                   {image && <Image src={image.imageUrl} alt={book.title} fill className="object-cover rounded-md" />}
+                   {image && <Image src={image.imageUrl} alt={item.title} fill className="object-cover rounded-md" />}
                 </div>
                 <div>
-                  <h3 className="font-semibold">{book.title}</h3>
-                  <p className="text-sm text-muted-foreground">{book.author.name}</p>
-                  <p className="text-sm text-primary font-medium">₹{book.price.toFixed(2)}</p>
+                  <h3 className="font-semibold">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground">{item.author}</p>
+                  <p className="text-sm text-primary font-medium">₹{item.price.toFixed(2)}</p>
+                  <p className="text-xs text-muted-foreground">Quantity: {item.quantity}</p>
                 </div>
               </div>
             )
@@ -80,9 +78,8 @@ export default function MyOrdersPage() {
 
   const { data: ordersData, isLoading } = useCollection<Order>(ordersRef);
 
-  const orders: OrderWithBooks[] = (ordersData || []).map(order => ({
+  const orders: OrderWithDate[] = (ordersData || []).map(order => ({
       ...order,
-      books: order.bookIds.map(bookId => getBookById(bookId)),
       timestamp: (order.timestamp as unknown as Timestamp)?.toDate() || new Date()
   })).sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
 

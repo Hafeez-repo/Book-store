@@ -45,10 +45,19 @@ export type WishlistItem = {
     bookId: string;
 };
 
+export type OrderItem = {
+    bookId: string;
+    title: string;
+    author: string;
+    price: number;
+    quantity: number;
+    coverImage: string;
+}
+
 export type Order = {
     id: string;
     userId: string;
-    bookIds: string[];
+    items: OrderItem[];
     totalPrice: number;
     paymentStatus: string;
     timestamp: any;
