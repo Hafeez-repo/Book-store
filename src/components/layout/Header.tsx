@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -10,8 +11,9 @@ import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import React from 'react';
-import { useUser, useAuth } from '@/firebase';
+import { useUser, useAuth, useCollection, useMemoFirebase } from '@/firebase';
 import { signOut } from 'firebase/auth';
+import { collection } from 'firebase/firestore';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,6 +23,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import type { CartItem } from '@/lib/types';
 
 const mainNavLinks = [
   { href: '/', label: 'Home' },
@@ -34,6 +37,13 @@ export default function Header() {
   const { user, isUserLoading } = useUser();
   const auth = useAuth();
 
+  const cartItemsRef = useMemoFirebase(() => {
+    if (!user || !auth) return null;
+    return collection(auth.app.options.projectId!, 'users', user.uid, 'cartItems');
+  }, [user, auth]);
+
+  const { data: cartItems } = useCollection<CartItem>(cartItemsRef);
+
   const handleSignOut = async () => {
     await signOut(auth);
   };
@@ -42,6 +52,8 @@ export default function Header() {
     if (!name) return '';
     return name.split(' ').map(n => n[0]).join('');
   }
+
+  const hasItemsInCart = cartItems && cartItems.length > 0;
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -124,10 +136,17 @@ export default function Header() {
           </div>
           <nav className="flex items-center">
             <Button variant="ghost" size="icon" asChild>
-              <Link href="/cart">
+              <Link href="/cart" className="relative">
+                {hasItemsInCart && <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-primary" />}
                 <ShoppingCart className="h-5 w-5" />
                 <span className="sr-only">Shopping Cart</span>
               </Link>
+            </Button>
+            <Button variant="ghost" size="icon" asChild>
+                <Link href="/orders">
+                    <Package className="h-5 w-5" />
+                    <span className="sr-only">My Orders</span>
+                </Link>
             </Button>
 
             {!isUserLoading && user ? (

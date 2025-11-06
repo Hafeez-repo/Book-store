@@ -39,7 +39,7 @@
     {
       "id": "book-6",
       "description": "Book cover for The Hobbit",
-      "imageUrl": "https://images.unsplash.com/photo-1720253814850-0b81a96f52ff?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxmYW50YXN5JTIwbWFwfGVufDB8fHx8MTc2MjMyMzYyOXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1720253814850-0b81a96f52ff?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxmYW50YXN5JTIwbWFwfGVufDB8fHx8MTc2MjMyMzYyOXww&ixlibrb-4.1.0&q=80&w=1080",
       "imageHint": "fantasy map"
     },
     {
@@ -77,6 +77,114 @@
       "description": "Book cover for Brave New World",
       "imageUrl": "https://images.unsplash.com/photo-1634585738250-09ee92cae0f8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxmdXR1cmlzdGljJTIwZGVzaWdufGVufDB8fHx8MTc2MjMzNzc4N3ww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "futuristic design"
+    },
+    {
+      "id": "book-13",
+      "description": "Book cover for Frankenstein",
+      "imageUrl": "https://images.unsplash.com/photo-1577493340887-b7bfff550145?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxnb3RoaWMlMjBtb25zdGVyfGVufDB8fHx8MTc2MjQzNjM0NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "gothic monster"
+    },
+    {
+      "id": "book-14",
+      "description": "Book cover for Dracula",
+      "imageUrl": "https://images.unsplash.com/photo-1654092779944-8a98fea5ffa9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHx2YW1waXJlJTIwY2FzdGxlfGVufDB8fHx8MTc2MjQzNjM0NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "vampire castle"
+    },
+    {
+      "id": "book-15",
+      "description": "Book cover for The Adventures of Tom Sawyer",
+      "imageUrl": "https://images.unsplash.com/photo-1641584495098-49cfceabd8e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxyaXZlciUyMGFkdmVudHVyZXxlbnwwfHx8fDE3NjI0MzYzNDV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "river adventure"
+    },
+    {
+      "id": "book-16",
+      "description": "Book cover for Crime and Punishment",
+      "imageUrl": "https://images.unsplash.com/photo-1493514789931-586cb221d7a7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxkYXJrJTIwY2l0eXNjYXBlfGVufDB8fHx8MTc2MjQzNjM0NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "dark cityscape"
+    },
+    {
+      "id": "book-17",
+      "description": "Book cover for Mrs Dalloway",
+      "imageUrl": "https://images.unsplash.com/photo-1580651214613-f4692d6d138f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxlbGVnYW50JTIwd29tYW58ZW58MHx8fHwxNzYyNDM2MzQ1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "elegant woman"
+    },
+    {
+      "id": "book-18",
+      "description": "Book cover for And Then There Were None",
+      "imageUrl": "https://images.unsplash.com/photo-1760451215997-334b028206c0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8aXNvbGF0ZWQlMjBpc2xhbmR8ZW58MHx8fHwxNzYyNDM2MzQ1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "isolated island"
+    },
+    {
+      "id": "book-19",
+      "description": "Book cover for A Study in Scarlet",
+      "imageUrl": "https://images.unsplash.com/photo-1697301439928-7c60326ff1ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxkZXRlY3RpdmUlMjBtYWduaWZ5aW5nfGVufDB8fHx8MTc2MjQzNjM0NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "detective magnifying"
+    },
+    {
+      "id": "book-20",
+      "description": "Book cover for Journey to the Center of the Earth",
+      "imageUrl": "https://images.unsplash.com/photo-1738669470468-4fc3333e0097?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Z2xvd2luZyUyMGNhdmV8ZW58MHx8fHwxNzYyNDM2MzQ1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "glowing cave"
+    },
+    {
+      "id": "book-21",
+      "description": "Book cover for The Picture of Dorian Gray",
+      "imageUrl": "https://images.unsplash.com/photo-1735238292404-2fed4a1c615d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxvcm5hdGUlMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjI0MzYzNDV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "ornate portrait"
+    },
+    {
+      "id": "book-22",
+      "description": "Book cover for The Raven",
+      "imageUrl": "https://images.unsplash.com/photo-1610961388987-7ebf46726355?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxibGFjayUyMHJhdmVufGVufDB8fHx8MTc2MjQzNjM0NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "black raven"
+    },
+    {
+      "id": "book-23",
+      "description": "Book cover for Wuthering Heights",
+      "imageUrl": "https://images.unsplash.com/photo-1673990962512-78054b865923?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzdG9ybXklMjBsYW5kc2NhcGV8ZW58MHx8fHwxNzYyNDM2MzQ2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "stormy landscape"
+    },
+    {
+      "id": "book-24",
+      "description": "Book cover for Jane Eyre",
+      "imageUrl": "https://images.unsplash.com/photo-1631339457659-221ea990c66b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxtb29keSUyMG1hbm9yfGVufDB8fHx8MTc2MjQzNjM0NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "moody manor"
+    },
+    {
+      "id": "book-25",
+      "description": "Book cover for Anna Karenina",
+      "imageUrl": "https://images.unsplash.com/photo-1589983810077-3f5bc54d0431?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8cnVzc2lhbiUyMGFyaXN0b2NyYWN5fGVufDB8fHx8MTc2MjQzNjM0NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "russian aristocracy"
+    },
+    {
+      "id": "book-26",
+      "description": "Book cover for The Brothers Karamazov",
+      "imageUrl": "https://images.unsplash.com/photo-1720022785516-9653ead7180c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxpbnRlbnNlJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzYyNDM2MzQ1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "intense portrait"
+    },
+    {
+      "id": "book-27",
+      "description": "Book cover for Don Quixote",
+      "imageUrl": "https://images.unsplash.com/photo-1657980927010-a483b056c063?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHx3aW5kbWlsbCUyMGxhbmRzY2FwZXxlbnwwfHx8fDE3NjI0MzYzNDZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "windmill landscape"
+    },
+    {
+      "id": "book-28",
+      "description": "Book cover for One Hundred Years of Solitude",
+      "imageUrl": "https://images.unsplash.com/photo-1732712411484-340a9a3b0907?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxtYWdpY2FsJTIwanVuZ2xlfGVufDB8fHx8MTc2MjQzNjM0NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "magical jungle"
+    },
+    {
+      "id": "book-29",
+      "description": "Book cover for The Lord of the Rings",
+      "imageUrl": "https://images.unsplash.com/photo-1559455224-3fd218202441?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxlcGljJTIwZmFudGFzeXxlbnwwfHx8fDE3NjIzNDAyODV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "epic fantasy"
+    },
+    {
+      "id": "book-30",
+      "description": "Book cover for The Divine Comedy",
+      "imageUrl": "https://images.unsplash.com/photo-1642633830240-4f5732914acc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxoZWF2ZW5seSUyMGxpZ2h0fGVufDB8fHx8MTc2MjM4NDczNHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "heavenly light"
     },
     {
       "id": "user-1",

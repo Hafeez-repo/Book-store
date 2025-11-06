@@ -1,6 +1,8 @@
+
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getBookById } from '@/lib/data';
 import { placeholderImages } from '@/lib/placeholder-images';
@@ -14,6 +16,7 @@ import { addDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 import { collection } from 'firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
 import React from 'react';
+import { ToastAction } from '@/components/ui/toast';
 
 export default function BookDetailPage({ params }: { params: { id: string } }) {
   const resolvedParams = React.use(params);
@@ -45,6 +48,11 @@ export default function BookDetailPage({ params }: { params: { id: string } }) {
     toast({
       title: 'Added to Cart',
       description: `"${book.title}" has been added to your cart.`,
+       action: (
+        <ToastAction asChild altText="Go to cart">
+          <Link href="/cart">Go to Cart</Link>
+        </ToastAction>
+      ),
     });
   };
 
